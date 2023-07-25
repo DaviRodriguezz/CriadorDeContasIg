@@ -1,0 +1,43 @@
+from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+import time
+
+def criar_contas():
+    # Configurar as opções do Chrome para desativar as notificações
+    chrome_options = Options()
+    chrome_options.add_argument("--disable-notifications")
+    driver = webdriver.Chrome(options=chrome_options)
+
+    navegador = driver
+    navegador.get("https://www.instagram.com/")
+
+    # Localizar o botão "Entrar" usando o XPath e clicar nele
+    WebDriverWait(navegador, 20).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div[5]/button'))).click()
+
+    time.sleep(2)
+
+    # Preencher os campos de e-mail e senha
+    navegador.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div/div[2]/div[1]/form/div/div[1]/input').send_keys("rrcbava@exelica.com")
+    time.sleep(2)
+    navegador.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div/div[2]/div[1]/form/div/div[2]/input').send_keys("neymarjunior123")
+    time.sleep(2)
+
+    # Clicar no botão "Entrar"
+    navegador.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div/div[2]/div[1]/form/div/div[3]/button').click()
+
+    # Esperar até que o botão "Agora Não" seja clicável
+    WebDriverWait(navegador, 20).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[3]/div[2]/div/div/form/div/div[1]/div[1]/div/div/div[3]/button[1]'))).click()
+    
+    time.sleep(10)
+     
+    # Esperar até que o botão "Sim, terminar de adicionar" seja clicável dentro do iframe
+    navegador.find_element(By.XPATH, '/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/section/main/div[2]/div/div/div/div/div[3]/button')
+
+    time.sleep(300)
+    navegador.quit()
+
+criar_contas()
